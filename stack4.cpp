@@ -1,50 +1,92 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-int main()
-{
-    int top = -1, value = 0;
-    int top1 = 1;
+int *stackArr;
+int top = -1;
+int sizeStack;
 
-    cout << "Enter the Size of Array" << endl;
-    int size;
-    if(!(cin >> size)) return 0;
-
-    vector<int> arr(size);
-
-    cout << "Enter the values" << endl;
-
-    for(int i = 0; i < size; i++)
-    {
-        if(top == size - 1)
-        {
-            cout << "Stack Overflow" << endl;
-            break;
-        } else 
-        {
-            cin >> value;
-            top++;
-            arr[top] = value;
-        }
+void push(int value){
+    if(top == sizeStack - 1){
+        cout << "Stack Overflow" << endl;
+    } else {
+        top++;
+        stackArr[top] = value;
+        cout << "pushed: " << value << endl;
     }
+}
 
-    cout << "Stack After Push:" << endl;
-    for(int i = top; i >= 0; i--)
-        cout << arr[i] << endl;
-
-    if(top != -1 && arr[top] != top1)
-    {
-        cout << "Removed Value: " << arr[top] << endl;
+void pop(){
+    if(top == -1){
+        cout << "Stack is underflow" << endl;
+    } else {
+        cout << "poped = " << stackArr[top] << endl;
         top--;
     }
+}
 
-    cout << "Stack After Removal:" << endl;
-    if(top == -1)
-        cout << "Stack is Empty" << endl;
-    else
-        for(int i = top; i >= 0; i--)
-            cout << arr[i] << endl;
+void peek(){
+    if(top == -1){
+        cout << "stack is empty" << endl;
+    } else {
+        cout << "Top element = " << stackArr[top] << endl;
+    }
+}
 
+void display(){
+    if(top == -1){
+        cout << "Stack Empty" << endl;
+        return;
+    }
+
+    cout << "Stack : ";
+    for(int i = top; i >= 0; i--){
+        cout << stackArr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main(){
+    cout << "Enter stack Size : ";
+    cin >> sizeStack;
+
+    stackArr = new int[sizeStack];
+
+    int choice;
+    int value;
+
+    do{
+        cout << "\nEnter Which operation you perform :" << endl;
+        cout << "1. Push" << endl;
+        cout << "2. pop" << endl;
+        cout << "3. peek" << endl;
+        cout << "4. Display" << endl;
+        cout << "0. Exit" << endl;
+        cout << "Enter choice: ";
+
+        cin >> choice;
+
+        switch(choice){
+            case 1:
+                cout << "Enter value to push: ";
+                cin >> value;
+                push(value);
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                peek();
+                break;
+
+            case 4:
+                display();
+                break;
+        }
+
+    }while(choice != 0);
+
+    delete[] stackArr;
     return 0;
 }
